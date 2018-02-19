@@ -1,2 +1,2 @@
-# node-web-api
-This will be the basic scaffold for a node js web api
+# RESTful Blockchain API
+A basic RESTful Blockchain API written in Node.js configured for Heroku deployment.
