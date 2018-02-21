@@ -5,5 +5,5 @@ export interface IBlock {
     timestamp: number;
     transactions: Array<ITransaction>;
     proofOfWork: number;
-    previous_hash: string;
+    previousHash: string;
 }
