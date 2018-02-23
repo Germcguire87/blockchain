@@ -22,7 +22,11 @@ export class Blockchain {
         if (previousHash) {
             hash = previousHash;
         } else {
-            hash = this.hash(_.last(this.chain));
+            let lastBlock = _.last(this.chain)
+            if (!lastBlock) {
+                throw new Error('createNewBlock - last block was undefined');
+            }
+            hash = this.hash(lastBlock);
         }
         let block: IBlock = {
             index: this.chain.length + 1,
@@ -48,7 +52,7 @@ export class Blockchain {
 
     public hash(block: IBlock): string {
         //Creates a SHA-256 hash of a Block
-        let stringifiedBlock = JSON.stringify(block);
+        let stringifiedBlock = JSON.stringify(block);//TODO abstract this hashing work out
         const hash = crypto.createHash('sha256') //TODO create CONSTANTS for these string
         hash.update(stringifiedBlock);
 
@@ -71,5 +75,27 @@ export class Blockchain {
 
         //The index of the Block that will hold this transaction
         return this.getLastBlock() + 1
+    }
+
+    public proofOfWork(lastProof: number): number {
+        //Simple Proof of Work Algorithm:
+        //      - Find a number proof such that hash(previousProof, newProof) contains leading 4 zeroes, where p is the previous p'
+        //      - p is the previous proof, and p' is the new proof
+
+        let proof = 0;
+        while (this.isProofValid(lastProof, proof) === false) {
+            proof += 1;
+        }
+        return proof;
+    }
+
+    public isProofValid(lastProof: number, currentProof: number): boolean {
+        // Validates the Proof: Does hash(last_proof, proof) contain 4 leading zeroes?
+
+        let guess: string = `${lastProof}${currentProof}`;
+        const hash = crypto.createHash('sha256') //TODO create CONSTANTS for these string
+        let guessHash = hash.update(guess).digest('hex');
+
+        return guessHash.substr(guessHash.length - 4) === '0000'; //TODO ADD TO CONSTANTS
     }
 }
