@@ -1,7 +1,7 @@
 import {
     IBlock,
     ITransaction
-} from './models'
+} from './models';
 import * as _ from 'lodash';
 import * as crypto from 'crypto';
 
@@ -11,12 +11,12 @@ export class Blockchain {
 
     constructor() {
         this.chain = [];
-        this.currentTransactions = []
+        this.currentTransactions = [];
         this.createNewBlock(100, '1');
     }
 
     public createNewBlock(proofOfWork: number, previousHash?: string): IBlock {
-        //Create a new block and add it to the chain
+        // Create a new block and add it to the chain
         let hash: string;
 
         if (previousHash) {
@@ -45,11 +45,6 @@ export class Blockchain {
         return block
     }
 
-    public createNewTransaction(): any {
-        //adds a new transaction to the list of transactions
-        return;
-    }
-
     public hash(block: IBlock): string {
         //Creates a SHA-256 hash of a Block
         let stringifiedBlock = JSON.stringify(block);//TODO abstract this hashing work out
@@ -59,12 +54,12 @@ export class Blockchain {
         return hash.digest('hex') //TODO add to constant
     }
 
-    public getLastBlock(): any {
-        //returns the last Block in the chain
-        return;
+    public getLastBlock(): IBlock {
+        let block = this.chain[this.chain.length - 1];
+        return block;
     }
 
-    public newTransaction(sender: number, recipient: number, amount: number): number {
+    public createNewTransaction(sender: string, recipient: string, amount: number): number {
         //Creates a new transaction to go into the next mined Block
 
         this.currentTransactions.push({
@@ -74,7 +69,7 @@ export class Blockchain {
         })
 
         //The index of the Block that will hold this transaction
-        return this.getLastBlock() + 1
+        return this.getLastBlock().index;
     }
 
     public proofOfWork(lastProof: number): number {

@@ -1,5 +1,5 @@
 export interface ITransaction {
-    sender: number;
-    recipient: number;
+    sender: string;
+    recipient: string;
     amount: number;
 }

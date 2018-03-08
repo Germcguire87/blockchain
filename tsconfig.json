@@ -1,20 +1,21 @@
 {
+  "files": [
+    "src/server.ts"
+],
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5",
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": ".",
-    "paths": {
-      "*": [
-        "node_modules/*"
-      ]
-    }
-  },
-  "include": [
-    "src/**/*"
-  ]
+      "target": "es6",
+      "sourceMap": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "isolatedModules": false,
+      "jsx": "react",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "declaration": false,
+      "noImplicitAny": false,
+      "removeComments": true,
+      "noLib": false,
+      "preserveConstEnums": true,
+      "suppressImplicitAnyIndexErrors": true
+  }
 }
